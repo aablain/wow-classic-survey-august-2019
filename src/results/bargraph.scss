@@ -1,0 +1,49 @@
+.bar-graph {
+  margin: 16px 0px;
+  padding: 0px !important;
+}
+
+.answer-bar {
+  margin: 10px auto 10px 0px;
+  display: block;
+  height: 10px;
+  border: none;
+  border-radius: 2px;
+  position: relative;
+  transition: width 280ms ease-in-out;
+
+  &::after {
+    // padding: 3px;
+    border: 1px solid #333;
+    content: attr(data-content);
+    display: none;
+    font-size: 12px;
+    position: absolute;
+    top: -20px;
+    left: 10px;
+    min-width: 175px;
+    background-color: rgba(255, 255, 255, 0.65);
+    border-radius: 3px;
+    z-index: 10;
+    text-align: left;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+  }
+
+  &:hover,
+  &:focus {
+    &::after {
+      display: initial;
+    }
+  }
+}
+
+.bar-graph-range {
+  padding-top: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: bold;
+  border-top: 1px solid;
+}
