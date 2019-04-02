@@ -99,6 +99,7 @@ export default class Wrapper extends React.Component<Props, State> {
         role: {},
         serverType: {}
       },
+      computedResponses: (Responses as Survey.Response[]) || [],
       responses: (Responses as Survey.Response[]) || [],
       filtering: false
     };
