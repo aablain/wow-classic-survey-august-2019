@@ -108,63 +108,40 @@ export default class Results extends React.Component<Props, State> {
   _calcAnswerQuantities() {
     const { responses } = this.props;
 
-    const answerCounts = responses.reduce(
-      (accum, response) => {
-        const respAsArray = Object.entries(response);
+    const answerCounts = responses.reduce((accum, response) => {
+      const respAsArray = Object.entries(response);
 
-        respAsArray.forEach(([questionKey, answer]: string[]) => {
-          if (questionKey === "responseDate") {
-            return accum;
-          }
-          if (
-            questionKey === "prof60" ||
-            questionKey === "profLeveling" ||
-            questionKey === "contentInterest"
-          ) {
-            const subAnswers = answer.split(", ");
-
-            subAnswers.forEach(subAnswer => {
-              if (!accum[questionKey as keyof Survey.Response][subAnswer]) {
-                accum[questionKey as keyof Survey.Response][subAnswer] = 1;
-              } else {
-                accum[questionKey as keyof Survey.Response][subAnswer]++;
-              }
-            });
-          } else {
-            if (!accum[questionKey as keyof Survey.Response][answer]) {
-              accum[questionKey as keyof Survey.Response][answer] = 1;
-            } else {
-              accum[questionKey as keyof Survey.Response][answer]++;
-            }
-          }
-
+      respAsArray.forEach(([questionKey, answer]: string[]) => {
+        if (questionKey === "responseDate") {
           return accum;
-        });
+        }
+        if (
+          questionKey === "prof60" ||
+          questionKey === "profLeveling" ||
+          questionKey === "contentInterest"
+        ) {
+          const subAnswers = answer.split(", ");
+
+          subAnswers.forEach(subAnswer => {
+            if (!accum[questionKey as keyof Survey.Response][subAnswer]) {
+              accum[questionKey as keyof Survey.Response][subAnswer] = 1;
+            } else {
+              accum[questionKey as keyof Survey.Response][subAnswer]++;
+            }
+          });
+        } else {
+          if (!accum[questionKey as keyof Survey.Response][answer]) {
+            accum[questionKey as keyof Survey.Response][answer] = 1;
+          } else {
+            accum[questionKey as keyof Survey.Response][answer]++;
+          }
+        }
 
         return accum;
-      },
-      this._getAnswersTemplate()
-      //   {
-      //     ageRange: {},
-      //     characterGender: {},
-      //     class: {},
-      //     classComparison: {},
-      //     contentInterest: {},
-      //     expectedTimeTo60: {},
-      //     faction: {},
-      //     firstRetailExpansionPlayed: {},
-      //     hasActiveSub: {},
-      //     hasPlayedPrivateServer: {},
-      //     mostRecentExpansionPlayed: {},
-      //     prof60: {},
-      //     profLeveling: {},
-      //     race: {},
-      //     region: {},
-      //     responseDate: {},
-      //     role: {},
-      //     serverType: {}
-      //   } as AnswersCounts
-    );
+      });
+
+      return accum;
+    }, this._getAnswersTemplate());
 
     return answerCounts;
   }
@@ -205,10 +182,10 @@ export default class Results extends React.Component<Props, State> {
           ).toFixed(2)}
           % of respondees
         </h3>
-        <p>
-          Filtering for{" "}
-          {!!this.props.activeFilters &&
-            this.props.activeFilters.map(([category, catFilters], catIdx) => {
+        {this.props.activeFilters && !!this.props.activeFilters.length && (
+          <p>
+            Filtering for{" "}
+            {this.props.activeFilters.map(([category, catFilters], catIdx) => {
               return `${catIdx + 1}.[ ${catFilters.map((filter, idx) =>
                 !!idx && idx + 1 === catFilters.length
                   ? ` or ${filter}`
@@ -216,7 +193,8 @@ export default class Results extends React.Component<Props, State> {
               )} ]
               ${catIdx + 1 !== filtersLength ? ", and " : ""}`;
             })}
-        </p>
+          </p>
+        )}
         <div className="results-results-cont">
           {Data.questions.map((questionKey, idx) => (
             <Result

@@ -6,6 +6,13 @@
   max-height: 100vh;
   overflow-y: auto;
   box-sizing: border-box;
+  max-width: 100vw;
+
+  @media screen and (max-width: 480px) {
+    padding: 0px 10px;
+    flex-basis: 100%;
+    background-color: #ececec;
+  }
 }
 
 .results-title {
@@ -31,6 +38,14 @@
   flex-basis: 550px;
   width: 550px;
   min-height: 80px;
+
+  @media screen and (max-width: 480px) {
+    margin-left: 0px;
+    flex-basis: 100%;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #fff;
+  }
 }
 
 .result-title {
@@ -61,6 +76,16 @@
       }
     }
   }
+
+  @media screen and (max-width: 480px) {
+    flex-wrap: wrap;
+
+    & > div {
+      padding: 10px 20% 30px;
+      width: 100%;
+      min-width: 100%;
+    }
+  }
 }
 
 .stats-list-cont {
@@ -69,6 +94,10 @@
 
   li {
     padding: 3px 0px;
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
   }
 }
 

@@ -69,7 +69,9 @@ interface State {
   answers: SelectedAnswers;
   computedResponses?: Survey.Response[];
   filtering: boolean;
+  isMobile: boolean;
   responses: Survey.Response[];
+  showFilters: boolean;
 }
 
 export default class Wrapper extends React.Component<Props, State> {
@@ -100,8 +102,10 @@ export default class Wrapper extends React.Component<Props, State> {
         serverType: {}
       },
       computedResponses: (Responses as Survey.Response[]) || [],
+      filtering: false,
+      isMobile: window.innerWidth < 480,
       responses: (Responses as Survey.Response[]) || [],
-      filtering: false
+      showFilters: window.innerWidth > 480
     };
 
     this.toggleAnswerFilter = this.toggleAnswerFilter.bind(this);
@@ -111,11 +115,24 @@ export default class Wrapper extends React.Component<Props, State> {
   public render() {
     return (
       <div className="main-wrapper">
-        <Filters
-          applyFilter={this.applyFilter}
-          selectedAnswers={this.state.answers}
-          toggleAnswer={this.toggleAnswerFilter}
-        />
+        {this.state.isMobile && (
+          <button
+            className="filters-toggle"
+            onClick={() =>
+              this.setState({ showFilters: !this.state.showFilters })
+            }
+          >
+            {this.state.showFilters ? "Hide" : "Filters"}
+          </button>
+        )}
+
+        {this.state.showFilters && (
+          <Filters
+            applyFilter={this.applyFilter}
+            selectedAnswers={this.state.answers}
+            toggleAnswer={this.toggleAnswerFilter}
+          />
+        )}
 
         {this.state.computedResponses && (
           <Results

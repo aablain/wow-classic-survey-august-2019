@@ -2,6 +2,19 @@
 
 .main-wrapper {
   display: flex;
+  position: relative;
+}
+
+.filters-toggle {
+  padding: 4px 6px;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ececec;
+  border: 1px solid;
+  font-size: 15px;
+  box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.8);
 }
 
 ///////////////
@@ -17,6 +30,20 @@
   // overflow-x: auto;
   box-sizing: border-box;
   background-color: #ececec;
+
+  @media screen and (max-width: 480px) {
+    padding-bottom: 50px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    max-height: 100vh;
+    min-height: 100vh;
+    flex-basis: 75vw;
+    width: 75vw;
+    max-width: 75vw;
+    box-shadow: 0px 0px 30px 4px rgba(0, 0, 0, 0.6);
+    animation: slideFromLeft 400ms ease-in-out;
+  }
 }
 
 .filters-title {
@@ -32,6 +59,10 @@
   box-sizing: border-box;
   width: 100%;
   // overflow-x: auto;
+
+  @media screen and (max-width: 480px) {
+    // max-height: calc(100vh - 200px);
+  }
 }
 
 .filters-filter-cont {
@@ -58,6 +89,7 @@
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .filters-filter-checkbox-cont {
@@ -102,4 +134,17 @@
   height: 100%;
   flex-basis: 100%;
   text-align: left;
+}
+
+/////////////////////////////////
+// * Animations
+/////////////////////////////////
+
+@keyframes slideFromLeft {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }
