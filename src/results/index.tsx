@@ -65,6 +65,7 @@ import "./styles.scss";
 interface Props {
   activeFilters?: [keyof Survey.Response, Survey.AllAnswers[]][];
   allResponsesCount: number;
+  isColorBlind: boolean;
   responses: Survey.Response[];
 }
 
@@ -199,6 +200,7 @@ export default class Results extends React.Component<Props, State> {
           {Data.questions.map((questionKey, idx) => (
             <Result
               idx={idx}
+              isColorBlind={this.props.isColorBlind}
               key={questionKey}
               question={questionKey as keyof Survey.Response}
               answerCounts={

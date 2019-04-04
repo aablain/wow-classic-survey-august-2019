@@ -8,6 +8,7 @@ import { Survey } from "../typings";
 
 interface Props {
   idx: number;
+  isColorBlind: boolean;
   answerCounts: {
     [x: string]: number;
   };
@@ -35,6 +36,7 @@ export default class Result extends React.Component<Props, State> {
       //   countsArr: this._getCountsAssARrayofArrays(props.answerCounts)
     };
 
+    this.getColor = this.getColor.bind(this);
     this.getChartType = this.getChartType.bind(this);
     this.renderBarGraph = this.renderBarGraph.bind(this);
     this.renderPieChart = this.renderPieChart.bind(this);
@@ -50,10 +52,7 @@ export default class Result extends React.Component<Props, State> {
     return Object.entries(answerCounts).map(([key, value], idx) => ({
       title: key,
       value,
-      color:
-        this.props.question === "class"
-          ? (Data.colorsObj as { [x: string]: string })[key]
-          : Data.colors[idx]
+      color: this.getColor(idx, key)
     }));
   }
 
@@ -64,7 +63,10 @@ export default class Result extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (this.props.answerCounts !== prevProps.answerCounts) {
+    if (
+      this.props.answerCounts !== prevProps.answerCounts ||
+      this.props.isColorBlind !== prevProps.isColorBlind
+    ) {
       this.setState({
         counts: this._getCountsAsArray(this.props.answerCounts)
         // countsArr: this._getCountsAssARrayofArrays(this.props.answerCounts)
@@ -106,6 +108,16 @@ export default class Result extends React.Component<Props, State> {
         </div>
       </div>
     );
+  }
+
+  getColor(idx: number, key: string): string {
+    if (this.props.isColorBlind) {
+      return Data.colorBlindColors[idx];
+    }
+
+    return this.props.question === "class"
+      ? (Data.colorsObj as { [x: string]: string })[key]
+      : Data.colors[idx];
   }
 
   getChartType(): "PieChart" | "BarChart" {

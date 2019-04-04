@@ -70,6 +70,7 @@ interface State {
   computedResponses?: Survey.Response[];
   filtering: boolean;
   isMobile: boolean;
+  isColorBlind: boolean;
   responses: Survey.Response[];
   showFilters: boolean;
 }
@@ -104,6 +105,7 @@ export default class Wrapper extends React.Component<Props, State> {
       computedResponses: (Responses as Survey.Response[]) || [],
       filtering: false,
       isMobile: window.innerWidth < 480,
+      isColorBlind: false,
       responses: (Responses as Survey.Response[]) || [],
       showFilters: window.innerWidth > 480
     };
@@ -129,8 +131,12 @@ export default class Wrapper extends React.Component<Props, State> {
         {this.state.showFilters && (
           <Filters
             applyFilter={this.applyFilter}
+            isColorBlind={this.state.isColorBlind}
             selectedAnswers={this.state.answers}
             toggleAnswer={this.toggleAnswerFilter}
+            updateColorBlind={() =>
+              this.setState({ isColorBlind: !this.state.isColorBlind })
+            }
           />
         )}
 
@@ -138,6 +144,7 @@ export default class Wrapper extends React.Component<Props, State> {
           <Results
             activeFilters={this.state.activeFilters}
             allResponsesCount={this.state.responses.length}
+            isColorBlind={this.state.isColorBlind}
             responses={this.state.computedResponses}
           />
         )}

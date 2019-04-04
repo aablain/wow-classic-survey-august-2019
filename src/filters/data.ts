@@ -13,6 +13,18 @@ const colors = [
   "#B3B6B7" // light-grey
 ];
 
+const colorBlindColors = [
+  "#154360",
+  "#1A5276",
+  "#1F618D",
+  "#1F618D",
+  "#2980B9",
+  "#5499C7",
+  "#5DADE2",
+  "#7FB3D5",
+  "#85C1E9"
+];
+
 const colorsObj = {
   Druid: "#FF7D0A",
   Hunter: "#ABD473",
@@ -177,6 +189,7 @@ export default {
     serverType: ["PvP", "PvE", "RP", "RP-PvP"]
   },
   colors,
+  colorBlindColors,
   colorsObj,
   questions,
   titles
