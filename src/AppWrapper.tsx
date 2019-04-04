@@ -1,9 +1,10 @@
 import * as React from "react";
 import Filters from "./filters/";
 import Results from "./results/";
-import Responses from "./db";
+// import Responses from "./db";
 import Data from "./filters/data";
 import { Survey } from "./typings";
+import { hitApi } from "./utils";
 
 interface Props {}
 
@@ -64,13 +65,73 @@ export interface SelectedAnswers {
   };
 }
 
+export interface AnswersCounts {
+  ageRange: {
+    [x: string]: number;
+  };
+  characterGender: {
+    [x: string]: number;
+  };
+  class: {
+    [x: string]: number;
+  };
+  classComparison: {
+    [x: string]: number;
+  };
+  contentInterest: {
+    [x: string]: number;
+  };
+  expectedTimeTo60: {
+    [x: string]: number;
+  };
+  faction: {
+    [x: string]: number;
+  };
+  firstRetailExpansionPlayed: {
+    [x: string]: number;
+  };
+  hasActiveSub: {
+    [x: string]: number;
+  };
+  hasPlayedPrivateServer: {
+    [x: string]: number;
+  };
+  mostRecentExpansionPlayed: {
+    [x: string]: number;
+  };
+  prof60: {
+    [x: string]: number;
+  };
+  profLeveling: {
+    [x: string]: number;
+  };
+  race: {
+    [x: string]: number;
+  };
+  region: {
+    [x: string]: number;
+  };
+  responseDate: {
+    [x: string]: number;
+  };
+  role: {
+    [x: string]: number;
+  };
+  serverType: {
+    [x: string]: number;
+  };
+}
+
 interface State {
   activeFilters?: [keyof Survey.Response, Survey.AllAnswers[]][];
+  answerCounts: AnswersCounts;
   answers: SelectedAnswers;
-  computedResponses?: Survey.Response[];
+  computedResponsesLength: number;
+  failedToLoad?: boolean;
   filtering: boolean;
   isMobile: boolean;
   isColorBlind: boolean;
+  loaded: boolean;
   responses: Survey.Response[];
   showFilters: boolean;
 }
@@ -102,19 +163,110 @@ export default class Wrapper extends React.Component<Props, State> {
         role: {},
         serverType: {}
       },
-      computedResponses: (Responses as Survey.Response[]) || [],
+      answerCounts: this._calcAnswerQuantities([]),
+      computedResponsesLength: 0,
       filtering: false,
       isMobile: window.innerWidth < 480,
       isColorBlind: false,
-      responses: (Responses as Survey.Response[]) || [],
+      loaded: false,
+      responses: [],
       showFilters: window.innerWidth > 480
     };
 
+    this._calcAnswerQuantities = this._calcAnswerQuantities.bind(this);
+    this._getAnswersTemplate = this._getAnswersTemplate.bind(this);
     this.toggleAnswerFilter = this.toggleAnswerFilter.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
   }
 
+  _calcAnswerQuantities(responses: Survey.Response[]) {
+    const answerCounts = responses.reduce((accum, response) => {
+      const respAsArray = Object.entries(response);
+
+      respAsArray.forEach(([questionKey, answer]: string[]) => {
+        if (questionKey === "responseDate") {
+          return accum;
+        }
+        if (
+          questionKey === "prof60" ||
+          questionKey === "profLeveling" ||
+          questionKey === "contentInterest"
+        ) {
+          const subAnswers = answer.split(", ");
+
+          subAnswers.forEach(subAnswer => {
+            if (!accum[questionKey as keyof Survey.Response][subAnswer]) {
+              accum[questionKey as keyof Survey.Response][subAnswer] = 1;
+            } else {
+              accum[questionKey as keyof Survey.Response][subAnswer]++;
+            }
+          });
+        } else {
+          if (!accum[questionKey as keyof Survey.Response][answer]) {
+            accum[questionKey as keyof Survey.Response][answer] = 1;
+          } else {
+            accum[questionKey as keyof Survey.Response][answer]++;
+          }
+        }
+
+        return accum;
+      });
+
+      return accum;
+    }, this._getAnswersTemplate());
+
+    return answerCounts;
+  }
+
+  _getAnswersTemplate() {
+    return Object.entries(Data.answers).reduce(
+      (accum, [q, answers]) => {
+        accum[q as keyof AnswersCounts] = {};
+        answers.forEach(a => {
+          accum[q as keyof AnswersCounts][a] = 0;
+        });
+        return accum;
+      },
+      {} as AnswersCounts
+    );
+  }
+
+  _getSurveyResults() {
+    hitApi(
+      "https://aablain.github.io/classic-survey-results/classic-survey-export.json",
+      (error: Error | null, responses: Survey.Response[]) => {
+        if (error) {
+          this.setState({ failedToLoad: true });
+          return;
+        }
+
+        const answerCounts = this._calcAnswerQuantities(responses);
+        this.setState({
+          answerCounts,
+          computedResponsesLength: responses.length,
+          responses,
+          loaded: true
+        });
+        debugger;
+      }
+    );
+  }
+
+  componentDidMount() {
+    this._getSurveyResults();
+  }
+
   public render() {
+    if (this.state.failedToLoad) {
+      return (
+        <div className="main-wrapper">Survey Results Failed to load :(</div>
+      );
+    }
+
+    if (!this.state.loaded) {
+      return <div className="main-wrapper">Loading Survey Results...</div>;
+    }
+
     return (
       <div className="main-wrapper">
         {this.state.isMobile && (
@@ -140,12 +292,13 @@ export default class Wrapper extends React.Component<Props, State> {
           />
         )}
 
-        {this.state.computedResponses && (
+        {this.state.answerCounts && (
           <Results
+            answerCounts={this.state.answerCounts}
             activeFilters={this.state.activeFilters}
+            computedResponsesLength={this.state.computedResponsesLength}
             allResponsesCount={this.state.responses.length}
             isColorBlind={this.state.isColorBlind}
-            responses={this.state.computedResponses}
           />
         )}
       </div>
@@ -159,8 +312,12 @@ export default class Wrapper extends React.Component<Props, State> {
 
       if (!questionsWithFilters.length) {
         return this.setState({
+          activeFilters: [],
           filtering: false,
-          computedResponses: this.state.responses
+          answerCounts: this._calcAnswerQuantities(this.state
+            .responses as Survey.Response[]),
+          computedResponsesLength: (this.state.responses as Survey.Response[])
+            .length
         });
       }
 
@@ -168,13 +325,15 @@ export default class Wrapper extends React.Component<Props, State> {
         (this.state.responses as Survey.Response[]) || [],
         questionsWithFilters
       );
+      const answerCounts = this._calcAnswerQuantities(computedResponses);
       //   console.log(questionsWithFilters);
       //   console.log(computedResponses);
 
       this.setState({
         activeFilters: questionsWithFilters,
+        answerCounts,
         filtering: false,
-        computedResponses
+        computedResponsesLength: computedResponses.length
       });
     });
   }

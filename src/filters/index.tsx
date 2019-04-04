@@ -31,22 +31,13 @@ export default class Filters extends React.Component<Props, State> {
   public render() {
     return (
       <div className="filters-main-cont">
-        <Checkbox
-          isSelected={this.props.isColorBlind}
-          answer="Yo Dingus, I'm colorblind"
-          onSelect={(
-            answer: string,
-            isSelected: boolean,
-            type: keyof Survey.Response
-          ) => this.props.updateColorBlind()}
-          type={"expectedTimeTo60"}
-        />
         <h2 className="filters-title">Filters</h2>
 
         <div className="filters-filters-cont">
           {Data.questions.map((question, idx) => (
             <Filter
               idx={idx + 1}
+              isColorBlind={this.props.isColorBlind}
               key={question}
               selectedAnswers={
                 this.props.selectedAnswers[question as keyof SelectedAnswers]
@@ -56,9 +47,23 @@ export default class Filters extends React.Component<Props, State> {
             />
           ))}
         </div>
-        <button className="filter-button" onClick={this.props.applyFilter}>
-          Apply Filter
-        </button>
+        <div className="filter-button-cont">
+          <button className="filter-button" onClick={this.props.applyFilter}>
+            Apply Filter
+          </button>
+          <Checkbox
+            isSelected={this.props.isColorBlind}
+            isColorBlind={true}
+            answer="I'm colorblind"
+            onSelect={(
+              answer: string,
+              isSelected: boolean,
+              type: keyof Survey.Response
+            ) => this.props.updateColorBlind()}
+            style={{ transform: "scale(0.7)" }}
+            type={"expectedTimeTo60"}
+          />
+        </div>
       </div>
     );
   }

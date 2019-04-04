@@ -3,7 +3,7 @@ import PieChart from "react-minimal-pie-chart";
 import BarGraph from "./bargraph";
 // import Chart from "react-google-charts";
 import Data from "../filters/data";
-import { AnswersCounts } from "./";
+import { AnswersCounts } from "../AppWrapper";
 import { Survey } from "../typings";
 
 interface Props {

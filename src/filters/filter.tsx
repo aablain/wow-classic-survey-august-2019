@@ -5,6 +5,7 @@ import { Survey } from "../typings";
 
 interface Props {
   idx: number;
+  isColorBlind: boolean;
   selectedAnswers: {
     [x: string]: boolean;
   };
@@ -40,6 +41,7 @@ export default class FilterComp extends React.Component<Props, State> {
           answers.map((answer: string) => (
             <Checkbox
               answer={answer}
+              isColorBlind={this.props.isColorBlind}
               isSelected={!!selectedAnswers[answer]}
               key={answer}
               onSelect={this.props.toggleAnswer}
