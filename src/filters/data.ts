@@ -3,8 +3,9 @@ const colors = [
   "#2980B9", // dark-blue
   "#9B59B6", // dark-purple
   "#D35400", // dark-orange
-  "#1E8449",
-  "#D4AC0D",
+  "#1E8449", // Dark Green
+  // "#D4AC0D", // Lighter Dark Yellow
+  "#B7950B", // Dark Yellow
   "#D98880", // light-red
   "#7FB3D5", // light-blue
   "#C39BD3", // light-purple
@@ -117,7 +118,7 @@ export default {
       "Battlegrounds",
       "Raids",
       "Role Playing",
-      "Colecting items/recipes/wealth",
+      "Collecting items/recipes/wealth",
       "Barrens Chat"
     ],
     expectedTimeTo60: [
@@ -184,7 +185,7 @@ export default {
       "Tauren",
       "Troll"
     ],
-    region: ["Americas", "Oceanas", "Europe", "Asia"],
+    region: ["Americas", "Oceanic", "Europe", "Asia"],
     role: ["DPS", "Healer", "Tank"],
     serverType: ["PvP", "PvE", "RP", "RP-PvP"]
   },

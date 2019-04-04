@@ -1,8 +1,7 @@
 import * as React from "react";
 import Data from "./data";
 import Filter from "./filter";
-import { Survey } from "../typings";
-import { SelectedAnswers } from "../AppWrapper";
+import { FilterTypes, Survey } from "../typings";
 import Checkbox from "./checkbox";
 
 import "./styles.scss";
@@ -10,7 +9,7 @@ import "./styles.scss";
 interface Props {
   applyFilter: () => void;
   isColorBlind: boolean;
-  selectedAnswers: SelectedAnswers;
+  selectedAnswers: FilterTypes.SelectedAnswers;
   toggleAnswer: (
     answer: string,
     isSelected: boolean,
@@ -40,7 +39,9 @@ export default class Filters extends React.Component<Props, State> {
               isColorBlind={this.props.isColorBlind}
               key={question}
               selectedAnswers={
-                this.props.selectedAnswers[question as keyof SelectedAnswers]
+                this.props.selectedAnswers[
+                  question as keyof FilterTypes.SelectedAnswers
+                ]
               }
               type={question as keyof Survey.Response}
               toggleAnswer={this.props.toggleAnswer}

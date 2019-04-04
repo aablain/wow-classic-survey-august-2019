@@ -3,7 +3,6 @@ import PieChart from "react-minimal-pie-chart";
 import BarGraph from "./bargraph";
 // import Chart from "react-google-charts";
 import Data from "../filters/data";
-import { AnswersCounts } from "../AppWrapper";
 import { Survey } from "../typings";
 
 interface Props {
@@ -82,26 +81,25 @@ export default class Result extends React.Component<Props, State> {
           {this.getChartType() === "BarChart"
             ? this.renderBarGraph()
             : this.renderPieChart()}
-          {/* <Chart
-            className="chart"
-            chartType={this.getChartType()}
-            loader={<p>Loading...</p>}
-            width={"100%"}
-            height={400}
-            options={{
-              height: 300,
-              width: 300
-            }}
-            data={[["answer", "value"], ...this.state.countsArr]}
-            rootProps={{ "data-testid": "1" }}
-          /> */}
 
           <ul className="stats-list-cont">
             {!!this.state.counts.length &&
               this.state.counts.map(({ color, title, value }) => (
-                <li className="result-text" key={title} style={{ color }}>
-                  <span className="result-text-title">{title}:</span> {value} (
-                  {((value / this.props.totalAnswers) * 100).toFixed(2)}%)
+                <li
+                  className="result-text"
+                  key={title}
+                  style={{
+                    color,
+                    textDecoration: !value ? "line-through" : ""
+                  }}
+                >
+                  <span className="result-text-title">{title}:</span>{" "}
+                  <span className="result-text-value">
+                    {value} -{" "}
+                    <span className="result-text-value-percentage">
+                      {((value / this.props.totalAnswers) * 100).toFixed(2)}%
+                    </span>
+                  </span>
                 </li>
               ))}
           </ul>

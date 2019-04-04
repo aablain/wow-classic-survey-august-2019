@@ -3,129 +3,15 @@ import Filters from "./filters/";
 import Results from "./results/";
 // import Responses from "./db";
 import Data from "./filters/data";
-import { Survey } from "./typings";
+import { FilterTypes, Survey } from "./typings";
 import { hitApi } from "./utils";
 
 interface Props {}
 
-export interface SelectedAnswers {
-  ageRange: {
-    [x: string]: boolean;
-  };
-  characterGender: {
-    [x: string]: boolean;
-  };
-  class: {
-    [x: string]: boolean;
-  };
-  classComparison: {
-    [x: string]: boolean;
-  };
-  contentInterest: {
-    [x: string]: boolean;
-  };
-  expectedTimeTo60: {
-    [x: string]: boolean;
-  };
-  faction: {
-    [x: string]: boolean;
-  };
-  firstRetailExpansionPlayed: {
-    [x: string]: boolean;
-  };
-  hasActiveSub: {
-    [x: string]: boolean;
-  };
-  hasPlayedPrivateServer: {
-    [x: string]: boolean;
-  };
-  mostRecentExpansionPlayed: {
-    [x: string]: boolean;
-  };
-  prof60: {
-    [x: string]: boolean;
-  };
-  profLeveling: {
-    [x: string]: boolean;
-  };
-  race: {
-    [x: string]: boolean;
-  };
-  region: {
-    [x: string]: boolean;
-  };
-  responseDate: {
-    [x: string]: boolean;
-  };
-  role: {
-    [x: string]: boolean;
-  };
-  serverType: {
-    [x: string]: boolean;
-  };
-}
-
-export interface AnswersCounts {
-  ageRange: {
-    [x: string]: number;
-  };
-  characterGender: {
-    [x: string]: number;
-  };
-  class: {
-    [x: string]: number;
-  };
-  classComparison: {
-    [x: string]: number;
-  };
-  contentInterest: {
-    [x: string]: number;
-  };
-  expectedTimeTo60: {
-    [x: string]: number;
-  };
-  faction: {
-    [x: string]: number;
-  };
-  firstRetailExpansionPlayed: {
-    [x: string]: number;
-  };
-  hasActiveSub: {
-    [x: string]: number;
-  };
-  hasPlayedPrivateServer: {
-    [x: string]: number;
-  };
-  mostRecentExpansionPlayed: {
-    [x: string]: number;
-  };
-  prof60: {
-    [x: string]: number;
-  };
-  profLeveling: {
-    [x: string]: number;
-  };
-  race: {
-    [x: string]: number;
-  };
-  region: {
-    [x: string]: number;
-  };
-  responseDate: {
-    [x: string]: number;
-  };
-  role: {
-    [x: string]: number;
-  };
-  serverType: {
-    [x: string]: number;
-  };
-}
-
 interface State {
   activeFilters?: [keyof Survey.Response, Survey.AllAnswers[]][];
-  answerCounts: AnswersCounts;
-  answers: SelectedAnswers;
+  answerCounts: FilterTypes.AnswersCounts;
+  answers: FilterTypes.SelectedAnswers;
   computedResponsesLength: number;
   failedToLoad?: boolean;
   filtering: boolean;
@@ -221,13 +107,13 @@ export default class Wrapper extends React.Component<Props, State> {
   _getAnswersTemplate() {
     return Object.entries(Data.answers).reduce(
       (accum, [q, answers]) => {
-        accum[q as keyof AnswersCounts] = {};
+        accum[q as keyof FilterTypes.AnswersCounts] = {};
         answers.forEach(a => {
-          accum[q as keyof AnswersCounts][a] = 0;
+          accum[q as keyof FilterTypes.AnswersCounts][a] = 0;
         });
         return accum;
       },
-      {} as AnswersCounts
+      {} as FilterTypes.AnswersCounts
     );
   }
 
@@ -247,7 +133,6 @@ export default class Wrapper extends React.Component<Props, State> {
           responses,
           loaded: true
         });
-        debugger;
       }
     );
   }
@@ -264,7 +149,11 @@ export default class Wrapper extends React.Component<Props, State> {
     }
 
     if (!this.state.loaded) {
-      return <div className="main-wrapper">Loading Survey Results...</div>;
+      return (
+        <div className="main-wrapper">
+          <h1 className="loading-message">Loading Survey Results...</h1>
+        </div>
+      );
     }
 
     return (
@@ -326,8 +215,6 @@ export default class Wrapper extends React.Component<Props, State> {
         questionsWithFilters
       );
       const answerCounts = this._calcAnswerQuantities(computedResponses);
-      //   console.log(questionsWithFilters);
-      //   console.log(computedResponses);
 
       this.setState({
         activeFilters: questionsWithFilters,
@@ -339,7 +226,7 @@ export default class Wrapper extends React.Component<Props, State> {
   }
 
   getFilters(
-    answers: SelectedAnswers
+    answers: FilterTypes.SelectedAnswers
   ): [keyof Survey.Response, Survey.AllAnswers[]][] {
     return Object.entries(answers).reduce(
       (accum, [questionKey, selectedAnswers]) => {

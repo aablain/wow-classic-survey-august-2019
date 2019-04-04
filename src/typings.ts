@@ -108,3 +108,119 @@ export namespace Survey {
     serverType: ServerTypeResp;
   }
 }
+
+export namespace FilterTypes {
+  export interface SelectedAnswers {
+    ageRange: {
+      [x: string]: boolean;
+    };
+    characterGender: {
+      [x: string]: boolean;
+    };
+    class: {
+      [x: string]: boolean;
+    };
+    classComparison: {
+      [x: string]: boolean;
+    };
+    contentInterest: {
+      [x: string]: boolean;
+    };
+    expectedTimeTo60: {
+      [x: string]: boolean;
+    };
+    faction: {
+      [x: string]: boolean;
+    };
+    firstRetailExpansionPlayed: {
+      [x: string]: boolean;
+    };
+    hasActiveSub: {
+      [x: string]: boolean;
+    };
+    hasPlayedPrivateServer: {
+      [x: string]: boolean;
+    };
+    mostRecentExpansionPlayed: {
+      [x: string]: boolean;
+    };
+    prof60: {
+      [x: string]: boolean;
+    };
+    profLeveling: {
+      [x: string]: boolean;
+    };
+    race: {
+      [x: string]: boolean;
+    };
+    region: {
+      [x: string]: boolean;
+    };
+    responseDate: {
+      [x: string]: boolean;
+    };
+    role: {
+      [x: string]: boolean;
+    };
+    serverType: {
+      [x: string]: boolean;
+    };
+  }
+
+  export interface AnswersCounts {
+    ageRange: {
+      [x: string]: number;
+    };
+    characterGender: {
+      [x: string]: number;
+    };
+    class: {
+      [x: string]: number;
+    };
+    classComparison: {
+      [x: string]: number;
+    };
+    contentInterest: {
+      [x: string]: number;
+    };
+    expectedTimeTo60: {
+      [x: string]: number;
+    };
+    faction: {
+      [x: string]: number;
+    };
+    firstRetailExpansionPlayed: {
+      [x: string]: number;
+    };
+    hasActiveSub: {
+      [x: string]: number;
+    };
+    hasPlayedPrivateServer: {
+      [x: string]: number;
+    };
+    mostRecentExpansionPlayed: {
+      [x: string]: number;
+    };
+    prof60: {
+      [x: string]: number;
+    };
+    profLeveling: {
+      [x: string]: number;
+    };
+    race: {
+      [x: string]: number;
+    };
+    region: {
+      [x: string]: number;
+    };
+    responseDate: {
+      [x: string]: number;
+    };
+    role: {
+      [x: string]: number;
+    };
+    serverType: {
+      [x: string]: number;
+    };
+  }
+}

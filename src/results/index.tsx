@@ -1,14 +1,14 @@
 import * as React from "react";
 import Data from "../filters/data";
 import Result from "./result";
-import { Survey } from "../typings";
-import { AnswersCounts } from "../AppWrapper";
+import { FilterTypes, Survey } from "../typings";
 
 import "./styles.scss";
+import data from "../filters/data";
 
 interface Props {
   activeFilters?: [keyof Survey.Response, Survey.AllAnswers[]][];
-  answerCounts: AnswersCounts;
+  answerCounts: FilterTypes.AnswersCounts;
   computedResponsesLength: number;
   allResponsesCount: number;
   isColorBlind: boolean;
@@ -33,12 +33,28 @@ export default (props: Props) => {
         <p>
           Filtering for{" "}
           {props.activeFilters.map(([category, catFilters], catIdx) => {
-            return `${catIdx + 1}.[ ${catFilters.map((filter, idx) =>
-              !!idx && idx + 1 === catFilters.length
-                ? ` or ${filter}`
-                : ` ${filter}`
-            )} ]
-              ${catIdx + 1 !== filtersLength ? ", and " : ""}`;
+            return (
+              <>
+                <span
+                  style={{
+                    color: props.isColorBlind
+                      ? data.colorBlindColors[catIdx]
+                      : data.colors[catIdx]
+                  }}
+                >
+                  {catIdx + 1}.[
+                  {catFilters.map((filter, idx) =>
+                    !!idx && idx + 1 === catFilters.length
+                      ? ` or ${filter}`
+                      : `${
+                          idx!! && idx + 1 !== catFilters.length ? ", " : " "
+                        }${filter}`
+                  )}{" "}
+                  ]
+                </span>{" "}
+                {catIdx + 1 !== filtersLength ? ", and " : ""}
+              </>
+            );
           })}
         </p>
       )}
