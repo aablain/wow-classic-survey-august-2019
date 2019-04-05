@@ -1,14 +1,17 @@
-export function hitApi(url, callback) {
+export function getSurveyData(callback) {
   var req = new XMLHttpRequest();
 
-  req.addEventListener("load", onLoad);
+  req.addEventListener("load", onDataLoaded);
   req.addEventListener("error", onFail);
   req.addEventListener("abort", onFail);
 
-  req.open("GET", url);
+  req.open(
+    "GET",
+    "https://aablain.github.io/classic-survey-results/classic-survey-export.json"
+  );
   req.send();
 
-  function onLoad(event) {
+  function onDataLoaded(event) {
     if (req.status >= 400) {
       onFail(event);
     } else {

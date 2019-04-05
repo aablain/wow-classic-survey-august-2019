@@ -4,7 +4,7 @@ import Results from "./results/";
 // import Responses from "./db";
 import Data from "./filters/data";
 import { FilterTypes, Survey } from "./typings";
-import { hitApi } from "./utils";
+import { getSurveyData } from "./utils";
 
 interface Props {}
 
@@ -118,23 +118,20 @@ export default class Wrapper extends React.Component<Props, State> {
   }
 
   _getSurveyResults() {
-    hitApi(
-      "https://aablain.github.io/classic-survey-results/classic-survey-export.json",
-      (error: Error | null, responses: Survey.Response[]) => {
-        if (error) {
-          this.setState({ failedToLoad: true });
-          return;
-        }
-
-        const answerCounts = this._calcAnswerQuantities(responses);
-        this.setState({
-          answerCounts,
-          computedResponsesLength: responses.length,
-          responses,
-          loaded: true
-        });
+    getSurveyData((error: Error | null, responses: Survey.Response[]) => {
+      if (error) {
+        this.setState({ failedToLoad: true });
+        return;
       }
-    );
+
+      const answerCounts = this._calcAnswerQuantities(responses);
+      this.setState({
+        answerCounts,
+        computedResponsesLength: responses.length,
+        responses,
+        loaded: true
+      });
+    });
   }
 
   componentDidMount() {
@@ -150,8 +147,9 @@ export default class Wrapper extends React.Component<Props, State> {
 
     if (!this.state.loaded) {
       return (
-        <div className="main-wrapper">
-          <h1 className="loading-message">Loading Survey Results...</h1>
+        <div className="loading-cont ">
+          <h1 className="loading-message">Loadin' that sweet, sweet data...</h1>
+          <h4 className="loading-message-sub">That means Survey Results</h4>
         </div>
       );
     }

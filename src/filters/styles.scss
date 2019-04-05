@@ -18,9 +18,24 @@
   box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.8);
 }
 
+.loading-cont {
+  color: #2d2d2d;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .loading-message {
-  margin: 40px auto;
+  margin: 40px auto 0px;
   text-align: center;
+  animation: blink 1200ms ease-in-out infinite;
+}
+
+.loading-message-sub {
+  margin-top: 10px;
+  text-align: center;
+  flex-basis: 100%;
+  opacity: 0.6;
+  font-style: italic;
 }
 
 ///////////////
@@ -160,5 +175,17 @@
   }
   100% {
     transform: translateX(0px);
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 1;
   }
 }

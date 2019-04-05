@@ -96,7 +96,13 @@ export default class Result extends React.Component<Props, State> {
                   <span className="result-text-title">{title}:</span>{" "}
                   <span className="result-text-value">
                     {value} -{" "}
-                    <span className="result-text-value-percentage">
+                    <span
+                      className="result-text-value-percentage"
+                      style={{
+                        borderColor: color
+                        // backgroundColor: color
+                      }}
+                    >
                       {((value / this.props.totalAnswers) * 100).toFixed(2)}%
                     </span>
                   </span>
