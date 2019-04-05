@@ -5,9 +5,11 @@ import { FilterTypes, Survey } from "../typings";
 import Checkbox from "./checkbox";
 
 import "./styles.scss";
+import { number } from "prop-types";
 
 interface Props {
   applyFilter: () => void;
+  innerHeight: number;
   isColorBlind: boolean;
   selectedAnswers: FilterTypes.SelectedAnswers;
   toggleAnswer: (
@@ -29,7 +31,10 @@ export default class Filters extends React.Component<Props, State> {
 
   public render() {
     return (
-      <div className="filters-main-cont">
+      <div
+        className="filters-main-cont"
+        style={{ height: this.props.innerHeight }}
+      >
         <h2 className="filters-title">Filters</h2>
 
         <div className="filters-filters-cont">

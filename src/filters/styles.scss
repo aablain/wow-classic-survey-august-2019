@@ -18,6 +18,7 @@
   border: 1px solid;
   font-size: 15px;
   box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.8);
+  z-index: 200;
 }
 
 .loading-cont {
@@ -53,19 +54,22 @@
   // overflow-x: auto;
   box-sizing: border-box;
   background-color: #ececec;
+  z-index: 201;
 
   @media screen and (max-width: 480px) {
-    padding-bottom: 50px;
+    padding-bottom: 10vh;
+    content: normal !important;
     position: fixed;
     left: 0px;
     top: 0px;
-    max-height: 100vh;
+    max-height: 100%;
     min-height: 100vh;
     flex-basis: 75vw;
     width: 75vw;
     max-width: 75vw;
     box-shadow: 0px 0px 30px 4px rgba(0, 0, 0, 0.6);
     animation: slideFromLeft 400ms ease-in-out;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -78,7 +82,7 @@
 .filters-filters-cont {
   display: flex;
   flex-wrap: wrap;
-  max-height: calc(100vh - 145px);
+  max-height: calc(100% - 145px);
   overflow-y: auto;
   box-sizing: border-box;
   width: 100%;

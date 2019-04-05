@@ -11,6 +11,7 @@ interface Props {
   answerCounts: FilterTypes.AnswersCounts;
   computedResponsesLength: number;
   allResponsesCount: number;
+  innerHeight: number;
   isColorBlind: boolean;
 }
 
@@ -18,7 +19,7 @@ export default (props: Props) => {
   const filtersLength = !!props.activeFilters ? props.activeFilters.length : 0;
 
   return (
-    <div className="results-main-cont">
+    <div className="results-main-cont" style={{ height: props.innerHeight }}>
       <h1 className="results-title">Results</h1>
       <h3 className="results-subtitle">
         {props.computedResponsesLength} Responses match your filters,

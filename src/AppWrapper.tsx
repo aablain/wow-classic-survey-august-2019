@@ -15,6 +15,7 @@ interface State {
   computedResponsesLength: number;
   failedToLoad?: boolean;
   filtering: boolean;
+  innerHeight: number;
   isMobile: boolean;
   isColorBlind: boolean;
   loaded: boolean;
@@ -52,6 +53,7 @@ export default class Wrapper extends React.Component<Props, State> {
       answerCounts: this._calcAnswerQuantities([]),
       computedResponsesLength: 0,
       filtering: false,
+      innerHeight: window.innerHeight,
       isMobile: window.innerWidth < 480,
       isColorBlind: false,
       loaded: false,
@@ -136,6 +138,7 @@ export default class Wrapper extends React.Component<Props, State> {
 
   componentDidMount() {
     this._getSurveyResults();
+    // window.addEventListener("resize", () => this.setState({ innerHeight: window.innerHeight }))
   }
 
   public render() {
@@ -170,6 +173,7 @@ export default class Wrapper extends React.Component<Props, State> {
         {this.state.showFilters && (
           <Filters
             applyFilter={this.applyFilter}
+            innerHeight={this.state.innerHeight}
             isColorBlind={this.state.isColorBlind}
             selectedAnswers={this.state.answers}
             toggleAnswer={this.toggleAnswerFilter}
@@ -185,6 +189,7 @@ export default class Wrapper extends React.Component<Props, State> {
             activeFilters={this.state.activeFilters}
             computedResponsesLength={this.state.computedResponsesLength}
             allResponsesCount={this.state.responses.length}
+            innerHeight={this.state.innerHeight}
             isColorBlind={this.state.isColorBlind}
           />
         )}
