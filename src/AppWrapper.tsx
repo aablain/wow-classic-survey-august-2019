@@ -136,9 +136,30 @@ export default class Wrapper extends React.Component<Props, State> {
     });
   }
 
+  _setHeight() {
+    // @ts-ignore
+    if (this.timeoutID) {
+      // @ts-ignore
+      clearTimeout(this.timeoutID);
+    }
+
+    // @ts-ignore
+    this.timeoutID = setTimeout(() => {
+      this.setState({ innerHeight: window.innerHeight });
+    }, 300);
+  }
+
   componentDidMount() {
     this._getSurveyResults();
-    // window.addEventListener("resize", () => this.setState({ innerHeight: window.innerHeight }))
+    window.addEventListener("resize", () =>
+      this.setState({ innerHeight: window.innerHeight })
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", () =>
+      this.setState({ innerHeight: window.innerHeight })
+    );
   }
 
   public render() {
