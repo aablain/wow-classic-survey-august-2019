@@ -24,3 +24,9 @@ export function getSurveyData(callback) {
     callback(new Error("..."));
   }
 }
+
+export function objectEntries(obj) {
+  return Object.entries
+    ? Object.entries(obj)
+    : Object.keys(obj).map(key => [key, obj[key]]);
+}

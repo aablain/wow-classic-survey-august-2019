@@ -1,7 +1,7 @@
 import * as React from "react";
 import PieChart from "react-minimal-pie-chart";
 import BarGraph from "./bargraph";
-// import Chart from "react-google-charts";
+import { objectEntries } from "../utils";
 import Data from "../filters/data";
 import { Survey } from "../typings";
 
@@ -48,17 +48,13 @@ export default class Result extends React.Component<Props, State> {
     value: number;
     color: string;
   }[] {
-    return Object.entries(answerCounts).map(([key, value], idx) => ({
-      title: key,
-      value,
-      color: this.getColor(idx, key)
-    }));
-  }
-
-  _getCountsAssARrayofArrays(answerCounts: {
-    [x: string]: number;
-  }): [string, number][] {
-    return Object.entries(answerCounts);
+    return (objectEntries(answerCounts) as [string, number][]).map(
+      ([key, value], idx) => ({
+        title: key,
+        value,
+        color: this.getColor(idx, key)
+      })
+    );
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -68,7 +64,6 @@ export default class Result extends React.Component<Props, State> {
     ) {
       this.setState({
         counts: this._getCountsAsArray(this.props.answerCounts)
-        // countsArr: this._getCountsAssARrayofArrays(this.props.answerCounts)
       });
     }
   }

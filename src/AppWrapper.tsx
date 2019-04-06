@@ -4,7 +4,7 @@ import Results from "./results/";
 // import Responses from "./db";
 import Data from "./filters/data";
 import { FilterTypes, Survey } from "./typings";
-import { getSurveyData } from "./utils";
+import { getSurveyData, objectEntries } from "./utils";
 
 interface Props {}
 
@@ -69,7 +69,7 @@ export default class Wrapper extends React.Component<Props, State> {
 
   _calcAnswerQuantities(responses: Survey.Response[]) {
     const answerCounts = responses.reduce((accum, response) => {
-      const respAsArray = Object.entries(response);
+      const respAsArray = objectEntries(response);
 
       respAsArray.forEach(([questionKey, answer]: string[]) => {
         if (questionKey === "responseDate") {
@@ -107,10 +107,10 @@ export default class Wrapper extends React.Component<Props, State> {
   }
 
   _getAnswersTemplate() {
-    return Object.entries(Data.answers).reduce(
+    return objectEntries(Data.answers).reduce(
       (accum, [q, answers]) => {
         accum[q as keyof FilterTypes.AnswersCounts] = {};
-        answers.forEach(a => {
+        answers.forEach((a: string) => {
           accum[q as keyof FilterTypes.AnswersCounts][a] = 0;
         });
         return accum;
@@ -252,9 +252,9 @@ export default class Wrapper extends React.Component<Props, State> {
   getFilters(
     answers: FilterTypes.SelectedAnswers
   ): [keyof Survey.Response, Survey.AllAnswers[]][] {
-    return Object.entries(answers).reduce(
+    return objectEntries(answers).reduce(
       (accum, [questionKey, selectedAnswers]) => {
-        const filteredAnswers = Object.entries(selectedAnswers as {
+        const filteredAnswers = objectEntries(selectedAnswers as {
           [x: string]: boolean;
         })
           .filter(([__, isSelected]) => isSelected)
