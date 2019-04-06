@@ -72,6 +72,8 @@ export default (props: Props) => {
             totalAnswers={props.computedResponsesLength}
           />
         ))}
+
+        <div className="result-cont" />
       </div>
     </div>
   );

@@ -86,11 +86,11 @@ export default class Result extends React.Component<Props, State> {
             {!!this.state.counts.length &&
               this.state.counts.map(({ color, title, value }) => (
                 <li
-                  className="result-text"
+                  className={`result-text${!value ? " none-match" : ""}`}
                   key={title}
                   style={{
-                    color,
-                    textDecoration: !value ? "line-through" : ""
+                    color
+                    // textDecoration: !value ? "line-through" : ""
                   }}
                 >
                   <span className="result-text-title">{title}:</span>{" "}
@@ -148,7 +148,7 @@ export default class Result extends React.Component<Props, State> {
     const props = {
       data: this.state.counts,
       label: label,
-      labelPosition: 112,
+      labelPosition: 114,
       labelStyle: {
         fontSize: "8x"
       }
@@ -162,8 +162,27 @@ export default class Result extends React.Component<Props, State> {
 const label = (labelProps: {
   dx: number;
   dy: number;
-  data: { percentage: number }[];
+  data: { color: string; percentage: number }[];
   dataIndex: number;
+  key: string;
+  textAnchor: string;
+  x: number;
+  y: number;
 }) => {
-  return labelProps.data[labelProps.dataIndex].percentage.toFixed(2) + "%";
+  const percent = labelProps.data[labelProps.dataIndex].percentage;
+  return (
+    <text
+      className="chart-result-percent"
+      textAnchor={labelProps.textAnchor}
+      alignmentBaseline="middle"
+      dx={labelProps.dx}
+      dy={labelProps.dy}
+      fill={labelProps.data[labelProps.dataIndex].color}
+      key={labelProps.key}
+      x={labelProps.x}
+      y={labelProps.y}
+    >
+      {percent ? `${percent.toFixed(2)}%` : ""}
+    </text>
+  );
 };
