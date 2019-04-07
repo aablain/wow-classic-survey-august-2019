@@ -63,8 +63,9 @@ export default class Wrapper extends React.Component<Props, State> {
 
     this._calcAnswerQuantities = this._calcAnswerQuantities.bind(this);
     this._getAnswersTemplate = this._getAnswersTemplate.bind(this);
-    this.toggleAnswerFilter = this.toggleAnswerFilter.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
+    this.clearFilter = this.clearFilter.bind(this);
+    this.toggleAnswerFilter = this.toggleAnswerFilter.bind(this);
   }
 
   _calcAnswerQuantities(responses: Survey.Response[]) {
@@ -194,6 +195,7 @@ export default class Wrapper extends React.Component<Props, State> {
         {this.state.showFilters && (
           <Filters
             applyFilter={this.applyFilter}
+            clearFilter={this.clearFilter}
             innerHeight={this.state.innerHeight}
             isColorBlind={this.state.isColorBlind}
             selectedAnswers={this.state.answers}
@@ -246,6 +248,31 @@ export default class Wrapper extends React.Component<Props, State> {
         filtering: false,
         computedResponsesLength: computedResponses.length
       });
+    });
+  }
+
+  clearFilter() {
+    this.setState({
+      answers: {
+        ageRange: {},
+        characterGender: {},
+        class: {},
+        classComparison: {},
+        contentInterest: {},
+        expectedTimeTo60: {},
+        faction: {},
+        firstRetailExpansionPlayed: {},
+        hasActiveSub: {},
+        hasPlayedPrivateServer: {},
+        mostRecentExpansionPlayed: {},
+        prof60: {},
+        profLeveling: {},
+        race: {},
+        region: {},
+        responseDate: {},
+        role: {},
+        serverType: {}
+      }
     });
   }
 

@@ -9,6 +9,7 @@ import { number } from "prop-types";
 
 interface Props {
   applyFilter: () => void;
+  clearFilter: () => void;
   innerHeight: number;
   isColorBlind: boolean;
   selectedAnswers: FilterTypes.SelectedAnswers;
@@ -54,6 +55,12 @@ export default class Filters extends React.Component<Props, State> {
           ))}
         </div>
         <div className="filter-button-cont">
+          <button
+            className="filter-button-clear"
+            onClick={this.props.clearFilter}
+          >
+            Clear
+          </button>
           <button className="filter-button" onClick={this.props.applyFilter}>
             Apply Filter
           </button>

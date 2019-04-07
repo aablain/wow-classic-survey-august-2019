@@ -116,6 +116,19 @@
   box-sizing: border-box;
 }
 
+.filter-button-clear {
+  margin: auto 10px auto 0px;
+  padding: 6px 18px;
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid #2d2d2d;
+  color: inherit;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
 .filter-button {
   margin: auto 0px;
   padding: 6px 18px;
