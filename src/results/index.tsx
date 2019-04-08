@@ -13,6 +13,7 @@ interface Props {
   allResponsesCount: number;
   innerHeight: number;
   isColorBlind: boolean;
+  questionsShowing: FilterTypes.QuestionsShowing;
 }
 
 export default (props: Props) => {
@@ -60,18 +61,24 @@ export default (props: Props) => {
         </p>
       )}
       <div className="results-results-cont">
-        {Data.questions.map((questionKey, idx) => (
-          <Result
-            idx={idx}
-            isColorBlind={props.isColorBlind}
-            key={questionKey}
-            question={questionKey as keyof Survey.Response}
-            answerCounts={
-              props.answerCounts[questionKey as keyof Survey.Response]
-            }
-            totalAnswers={props.computedResponsesLength}
-          />
-        ))}
+        {Data.questions.map((questionKey, idx) =>
+          props.questionsShowing[
+            questionKey as keyof FilterTypes.QuestionsShowing
+          ] ? (
+            <Result
+              idx={idx}
+              isColorBlind={props.isColorBlind}
+              key={questionKey}
+              question={questionKey as keyof Survey.Response}
+              answerCounts={
+                props.answerCounts[questionKey as keyof Survey.Response]
+              }
+              totalAnswers={props.computedResponsesLength}
+            />
+          ) : (
+            <span />
+          )
+        )}
 
         <div className="result-cont" />
       </div>

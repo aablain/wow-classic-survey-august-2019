@@ -223,4 +223,25 @@ export namespace FilterTypes {
       [x: string]: number;
     };
   }
+
+  export interface QuestionsShowing {
+    ageRange: boolean;
+    characterGender: boolean;
+    class: boolean;
+    classComparison: boolean;
+    contentInterest: boolean;
+    expectedTimeTo60: boolean;
+    faction: boolean;
+    firstRetailExpansionPlayed: boolean;
+    hasActiveSub: boolean;
+    hasPlayedPrivateServer: boolean;
+    mostRecentExpansionPlayed: boolean;
+    prof60: boolean;
+    profLeveling: boolean;
+    race: boolean;
+    region: boolean;
+    responseDate: boolean;
+    role: boolean;
+    serverType: boolean;
+  }
 }

@@ -79,6 +79,15 @@
   height: 28px;
 }
 
+.filters-title-reset-button {
+  margin: 0px auto;
+  display: flex;
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  font-size: 9px;
+}
+
 .filters-filters-cont {
   display: flex;
   flex-wrap: wrap;
@@ -107,6 +116,20 @@
   margin: 0px;
   padding-bottom: 10px;
   width: 100%;
+}
+
+.filters-filter-title-text {
+  transition: opacity 220ms ease-in-out;
+
+  &.is-not-showing {
+    opacity: 0.6;
+  }
+}
+
+.filters-filter-title-showing-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .filter-button-cont {

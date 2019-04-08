@@ -19,6 +19,7 @@ interface State {
   isMobile: boolean;
   isColorBlind: boolean;
   loaded: boolean;
+  questionsShowing: FilterTypes.QuestionsShowing;
   responses: Survey.Response[];
   showFilters: boolean;
 }
@@ -57,6 +58,26 @@ export default class Wrapper extends React.Component<Props, State> {
       isMobile: window.innerWidth < 480,
       isColorBlind: false,
       loaded: false,
+      questionsShowing: {
+        ageRange: true,
+        characterGender: true,
+        class: true,
+        classComparison: true,
+        contentInterest: true,
+        expectedTimeTo60: true,
+        faction: true,
+        firstRetailExpansionPlayed: true,
+        hasActiveSub: true,
+        hasPlayedPrivateServer: true,
+        mostRecentExpansionPlayed: true,
+        prof60: true,
+        profLeveling: true,
+        race: true,
+        region: true,
+        responseDate: true,
+        role: true,
+        serverType: true
+      },
       responses: [],
       showFilters: window.innerWidth > 480
     };
@@ -65,7 +86,9 @@ export default class Wrapper extends React.Component<Props, State> {
     this._getAnswersTemplate = this._getAnswersTemplate.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
+    this.resetQuestionsShowing = this.resetQuestionsShowing.bind(this);
     this.toggleAnswerFilter = this.toggleAnswerFilter.bind(this);
+    this.updateQuestionShowing = this.updateQuestionShowing.bind(this);
   }
 
   _calcAnswerQuantities(responses: Survey.Response[]) {
@@ -198,11 +221,14 @@ export default class Wrapper extends React.Component<Props, State> {
             clearFilter={this.clearFilter}
             innerHeight={this.state.innerHeight}
             isColorBlind={this.state.isColorBlind}
+            questionsShowing={this.state.questionsShowing}
+            resetQuestionsShowing={this.resetQuestionsShowing}
             selectedAnswers={this.state.answers}
             toggleAnswer={this.toggleAnswerFilter}
             updateColorBlind={() =>
               this.setState({ isColorBlind: !this.state.isColorBlind })
             }
+            updateQuestionsShowing={this.updateQuestionShowing}
           />
         )}
 
@@ -214,6 +240,7 @@ export default class Wrapper extends React.Component<Props, State> {
             allResponsesCount={this.state.responses.length}
             innerHeight={this.state.innerHeight}
             isColorBlind={this.state.isColorBlind}
+            questionsShowing={this.state.questionsShowing}
           />
         )}
       </div>
@@ -320,6 +347,31 @@ export default class Wrapper extends React.Component<Props, State> {
     });
   }
 
+  resetQuestionsShowing() {
+    this.setState({
+      questionsShowing: {
+        ageRange: true,
+        characterGender: true,
+        class: true,
+        classComparison: true,
+        contentInterest: true,
+        expectedTimeTo60: true,
+        faction: true,
+        firstRetailExpansionPlayed: true,
+        hasActiveSub: true,
+        hasPlayedPrivateServer: true,
+        mostRecentExpansionPlayed: true,
+        prof60: true,
+        profLeveling: true,
+        race: true,
+        region: true,
+        responseDate: true,
+        role: true,
+        serverType: true
+      }
+    });
+  }
+
   toggleAnswerFilter(
     answer: string,
     isSelected: boolean,
@@ -332,6 +384,17 @@ export default class Wrapper extends React.Component<Props, State> {
 
     this.setState({
       answers: { ...this.state.answers, [type]: updatedSection }
+    });
+  }
+
+  updateQuestionShowing(question: string) {
+    this.setState({
+      questionsShowing: {
+        ...this.state.questionsShowing,
+        [question]: !this.state.questionsShowing[
+          question as keyof FilterTypes.QuestionsShowing
+        ]
+      }
     });
   }
 }

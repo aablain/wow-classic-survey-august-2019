@@ -3,9 +3,13 @@ import Data from "./data";
 import Checkbox from "./checkbox";
 import { Survey } from "../typings";
 
+import HideIcon from "../icons/hide";
+import ShowIcon from "../icons/show";
+
 interface Props {
   idx: number;
   isColorBlind: boolean;
+  questionIsShowing: boolean;
   selectedAnswers: {
     [x: string]: boolean;
   };
@@ -15,6 +19,7 @@ interface Props {
     type: keyof Survey.Response
   ) => void;
   type: keyof Survey.Response;
+  updateQuestionsShowing: (question: string) => void;
 }
 
 interface State {}
@@ -24,6 +29,8 @@ export default class FilterComp extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+
+    this.startUpdate = this.startUpdate.bind(this);
   }
 
   render() {
@@ -34,7 +41,23 @@ export default class FilterComp extends React.Component<Props, State> {
     return (
       <div className="filters-filter-cont">
         <h4 className="filters-filter-title">
-          {idx}. {title}?
+          <span
+            className={`filters-filter-title-text${
+              this.props.questionIsShowing ? "" : " is-not-showing"
+            }`}
+          >
+            {idx}. {title}?{" "}
+          </span>
+          <button
+            className="filters-filter-title-showing-button"
+            onClick={this.startUpdate}
+          >
+            {this.props.questionIsShowing ? (
+              <ShowIcon fill="black" size={20} />
+            ) : (
+              <HideIcon fill="black" size={20} />
+            )}
+          </button>
         </h4>
 
         {answers &&
@@ -50,5 +73,9 @@ export default class FilterComp extends React.Component<Props, State> {
           ))}
       </div>
     );
+  }
+
+  startUpdate() {
+    this.props.updateQuestionsShowing(this.props.type);
   }
 }

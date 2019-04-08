@@ -5,13 +5,14 @@ import { FilterTypes, Survey } from "../typings";
 import Checkbox from "./checkbox";
 
 import "./styles.scss";
-import { number } from "prop-types";
 
 interface Props {
   applyFilter: () => void;
   clearFilter: () => void;
   innerHeight: number;
   isColorBlind: boolean;
+  questionsShowing: FilterTypes.QuestionsShowing;
+  resetQuestionsShowing: () => void;
   selectedAnswers: FilterTypes.SelectedAnswers;
   toggleAnswer: (
     answer: string,
@@ -19,6 +20,7 @@ interface Props {
     type: keyof Survey.Response
   ) => void;
   updateColorBlind: () => void;
+  updateQuestionsShowing: (question: string) => void;
 }
 
 interface State {}
@@ -36,7 +38,15 @@ export default class Filters extends React.Component<Props, State> {
         className="filters-main-cont"
         style={{ height: this.props.innerHeight }}
       >
-        <h2 className="filters-title">Filters</h2>
+        <h2 className="filters-title">
+          Filters{" "}
+          <button
+            className="filters-title-reset-button"
+            onClick={this.props.resetQuestionsShowing}
+          >
+            Reset Results Showing
+          </button>
+        </h2>
 
         <div className="filters-filters-cont">
           {Data.questions.map((question, idx) => (
@@ -44,6 +54,11 @@ export default class Filters extends React.Component<Props, State> {
               idx={idx + 1}
               isColorBlind={this.props.isColorBlind}
               key={question}
+              questionIsShowing={
+                this.props.questionsShowing[
+                  question as keyof FilterTypes.QuestionsShowing
+                ]
+              }
               selectedAnswers={
                 this.props.selectedAnswers[
                   question as keyof FilterTypes.SelectedAnswers
@@ -51,6 +66,7 @@ export default class Filters extends React.Component<Props, State> {
               }
               type={question as keyof Survey.Response}
               toggleAnswer={this.props.toggleAnswer}
+              updateQuestionsShowing={this.props.updateQuestionsShowing}
             />
           ))}
         </div>
