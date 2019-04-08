@@ -53,9 +53,9 @@ export default class FilterComp extends React.Component<Props, State> {
             onClick={this.startUpdate}
           >
             {this.props.questionIsShowing ? (
-              <ShowIcon fill="black" size={20} />
+              <ShowIcon fill="black" size={16} />
             ) : (
-              <HideIcon fill="black" size={20} />
+              <HideIcon fill="black" size={16} />
             )}
           </button>
         </h4>
