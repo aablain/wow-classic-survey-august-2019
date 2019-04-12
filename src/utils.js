@@ -7,7 +7,7 @@ export function getSurveyData(callback) {
 
   req.open(
     "GET",
-    "https://aablain.github.io/classic-survey-results/classic-survey-export.json"
+    "https://aablain.github.io/classic-survey-results/classic-survey-results.json"
   );
   req.send();
 

@@ -192,6 +192,120 @@ export default {
   colors,
   colorBlindColors,
   colorsObj,
+  factions: {
+    ["For the Horde!"]: {
+      Shaman: true,
+      Rogue: true,
+      Priest: true,
+      Warrior: true,
+      Paladin: false,
+      Mage: true,
+      Warlock: true,
+      Hunter: true,
+      Druid: true
+    },
+    ["For the Alliance!"]: {
+      Shaman: false,
+      Rogue: true,
+      Priest: true,
+      Warrior: true,
+      Paladin: true,
+      Mage: true,
+      Warlock: true,
+      Hunter: true,
+      Druid: true
+    }
+  },
   questions,
+  races: {
+    Human: {
+      Shaman: false,
+      Rogue: true,
+      Priest: true,
+      Warrior: true,
+      Paladin: true,
+      Mage: true,
+      Warlock: true,
+      Hunter: false,
+      Druid: false
+    },
+    Dwarf: {
+      Shaman: false,
+      Rogue: true,
+      Priest: true,
+      Warrior: true,
+      Paladin: true,
+      Mage: false,
+      Warlock: false,
+      Hunter: true,
+      Druid: true
+    },
+    ["Night Elf"]: {
+      Shaman: false,
+      Rogue: true,
+      Priest: true,
+      Warrior: true,
+      Paladin: false,
+      Mage: false,
+      Warlock: false,
+      Hunter: true,
+      Druid: true
+    },
+    Gnome: {
+      Shaman: false,
+      Rogue: true,
+      Priest: false,
+      Warrior: true,
+      Paladin: false,
+      Mage: true,
+      Warlock: true,
+      Hunter: false,
+      Druid: false
+    },
+    Orc: {
+      Shaman: true,
+      Rogue: true,
+      Priest: false,
+      Warrior: true,
+      Paladin: false,
+      Mage: false,
+      Warlock: true,
+      Hunter: true,
+      Druid: false
+    },
+    Undead: {
+      Shaman: false,
+      Rogue: true,
+      Priest: true,
+      Warrior: true,
+      Paladin: false,
+      Mage: true,
+      Warlock: true,
+      Hunter: false,
+      Druid: false
+    },
+    Tauren: {
+      Shaman: true,
+      Rogue: false,
+      Priest: false,
+      Warrior: true,
+      Paladin: false,
+      Mage: false,
+      Warlock: false,
+      Hunter: true,
+      Druid: true
+    },
+    Troll: {
+      Shaman: true,
+      Rogue: true,
+      Priest: true,
+      Warrior: true,
+      Paladin: false,
+      Mage: true,
+      Warlock: false,
+      Hunter: true,
+      Druid: false
+    }
+  },
   titles
 };

@@ -1,7 +1,6 @@
 import * as React from "react";
 import Filters from "./filters/";
 import Results from "./results/";
-// import Responses from "./db";
 import Data from "./filters/data";
 import { FilterTypes, Survey } from "./typings";
 import { getSurveyData, objectEntries } from "./utils";
@@ -83,6 +82,7 @@ export default class Wrapper extends React.Component<Props, State> {
     };
 
     this._calcAnswerQuantities = this._calcAnswerQuantities.bind(this);
+    this._filterResults = this._filterResults.bind(this);
     this._getAnswersTemplate = this._getAnswersTemplate.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
@@ -143,6 +143,14 @@ export default class Wrapper extends React.Component<Props, State> {
     );
   }
 
+  _filterResults(results: Survey.Response[]) {
+    return results.filter(
+      item =>
+        Data.factions[item.faction][item.class] &&
+        Data.races[item.race][item.class]
+    );
+  }
+
   _getSurveyResults() {
     getSurveyData((error: Error | null, responses: Survey.Response[]) => {
       if (error) {
@@ -150,11 +158,13 @@ export default class Wrapper extends React.Component<Props, State> {
         return;
       }
 
-      const answerCounts = this._calcAnswerQuantities(responses);
+      const filteredResps = this._filterResults(responses);
+
+      const answerCounts = this._calcAnswerQuantities(filteredResps);
       this.setState({
         answerCounts,
-        computedResponsesLength: responses.length,
-        responses,
+        computedResponsesLength: filteredResps.length,
+        responses: filteredResps,
         loaded: true
       });
     });
