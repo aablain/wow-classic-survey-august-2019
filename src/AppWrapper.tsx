@@ -46,9 +46,12 @@ export default class Wrapper extends React.Component<Props, State> {
         profLeveling: {},
         race: {},
         region: {},
-        responseDate: {},
         role: {},
-        serverType: {}
+        serverType: {},
+        dailyPlayTime: {},
+        willTakeTimeOffWork: {},
+        hasFoundGuild: {},
+        phaseMostExcitedFor: {}
       },
       answerCounts: this._calcAnswerQuantities([]),
       computedResponsesLength: 0,
@@ -73,9 +76,12 @@ export default class Wrapper extends React.Component<Props, State> {
         profLeveling: true,
         race: true,
         region: true,
-        responseDate: true,
+        dailyPlayTime: true,
+        willTakeTimeOffWork: true,
+        hasFoundGuild: true,
         role: true,
-        serverType: true
+        serverType: true,
+        phaseMostExcitedFor: true
       },
       responses: [],
       showFilters: window.innerWidth > 480
@@ -306,9 +312,12 @@ export default class Wrapper extends React.Component<Props, State> {
         profLeveling: {},
         race: {},
         region: {},
-        responseDate: {},
         role: {},
-        serverType: {}
+        serverType: {},
+        dailyPlayTime: {},
+        willTakeTimeOffWork: {},
+        hasFoundGuild: {},
+        phaseMostExcitedFor: {}
       }
     });
   }
@@ -375,9 +384,12 @@ export default class Wrapper extends React.Component<Props, State> {
         profLeveling: true,
         race: true,
         region: true,
-        responseDate: true,
         role: true,
-        serverType: true
+        serverType: true,
+        dailyPlayTime: true,
+        willTakeTimeOffWork: true,
+        hasFoundGuild: true,
+        phaseMostExcitedFor: true
       }
     });
   }

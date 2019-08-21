@@ -44,27 +44,30 @@ const colorsObj = {
 };
 
 const questions = [
-  "ageRange",
-  "characterGender",
-  "class",
-  "classComparison",
-  "contentInterest",
-  "expectedTimeTo60",
+  "region",
+  "serverType",
   "faction",
-  "firstRetailExpansionPlayed",
-  "hasActiveSub",
-  "hasPlayedPrivateServer",
-  "mostRecentExpansionPlayed",
+  "characterGender",
+  "race",
+  "class",
+  "role",
   "profLeveling",
   "prof60",
-  "race",
-  "region",
-  // "responseDate",
-  "role",
-  "serverType"
+  "ageRange",
+  "hasActiveSub",
+  "firstRetailExpansionPlayed",
+  "mostRecentExpansionPlayed",
+  "hasPlayedPrivateServer",
+  "classComparison",
+  "hasFoundGuild",
+  "expectedTimeTo60",
+  "dailyPlayTime",
+  "willTakeTimeOffWork",
+  "phaseMostExcitedFor",
+  "contentInterest"
 ];
 
-const titles = {
+const titles: { [x: string]: string } = {
   ageRange: "What is your age",
   characterGender: "What gender will your character be",
   class: "What class will your character be",
@@ -88,7 +91,11 @@ const titles = {
   region: "What region will you be playing on",
   responseDate: "Response Timestamp",
   role: "What will the primary role of your character be",
-  serverType: "What type of sever will you be playing on"
+  serverType: "What type of sever will you be playing on",
+  dailyPlayTime: "After the first month (post-launch), what do you anticipate your average daily playtime will be",
+  willTakeTimeOffWork: "Will you be taking time off work or other obligations for Classic's launch",
+  hasFoundGuild: "Have you already found a guild you will join at launch",
+  phaseMostExcitedFor: "Which of the six Phases are you most excited to play?"
 };
 
 export default {
@@ -187,7 +194,11 @@ export default {
     ],
     region: ["Americas", "Oceanic", "Europe", "Asia"],
     role: ["DPS", "Healer", "Tank"],
-    serverType: ["PvP", "PvE", "RP", "RP-PvP"]
+    serverType: ["PvP", "PvE", "RP", "RP-PvP"],
+    dailyPlayTime: ["1 - 2 hours", "3 - 4 hours", "5 - 6 hours", "7 - 8 hours", "9 - 10 hours", "11 - 12 hours", "12+ hours"],
+    willTakeTimeOffWork: ["Yes, I have taken a week or more off for Classic's launch", "I have no other obligations", "No, I do not plan to take time off"],
+    hasFoundGuild: ["Yes", "No, and I am not currently looking", "No, though I am currently looking"],
+    phaseMostExcitedFor: ["Phase 1", "Phase 2", "Phase 3", "Phase 4", "Phase 5", "Phase 6"]
   },
   colors,
   colorBlindColors,

@@ -1,28 +1,71 @@
-export function getSurveyData(callback) {
-  var req = new XMLHttpRequest();
 
-  req.addEventListener("load", onDataLoaded);
-  req.addEventListener("error", onFail);
-  req.addEventListener("abort", onFail);
+export async function getSurveyData(callback) {
+  const [part1, part2] = await Promise.all([
+    getSurveyDataPart1(),
+    getSurveyDataPart2()
+  ]);
 
-  req.open(
-    "GET",
-    "https://aablain.github.io/classic-survey-results/classic-survey-results.json"
-  );
-  req.send();
+  debugger;
 
-  function onDataLoaded(event) {
-    if (req.status >= 400) {
-      onFail(event);
-    } else {
-      var json = JSON.parse(this.responseText);
-      callback(null, json);
+  callback(null, [...part1, ...part2]);
+}
+
+function getSurveyDataPart1() {
+  return new Promise((res, rej) => {
+    var req = new XMLHttpRequest();
+
+    req.addEventListener("load", onDataLoaded);
+    req.addEventListener("error", onFail);
+    req.addEventListener("abort", onFail);
+
+    req.open(
+      "GET",
+      "https://aablain.github.io/classic-survey-results-august-2019/classic-survey-results-august-2019-part-1.json"
+    );
+    req.send();
+
+    function onDataLoaded(event) {
+      if (req.status >= 400) {
+        onFail(event);
+      } else {
+        var json = JSON.parse(this.responseText);
+        res(json);
+      }
     }
-  }
 
-  function onFail(event) {
-    callback(new Error("..."));
-  }
+    function onFail(event) {
+      rej(new Error("..."));
+    }
+  });
+}
+
+export function getSurveyDataPart2() {
+  return new Promise((res, rej) => {
+    var req = new XMLHttpRequest();
+
+    req.addEventListener("load", onDataLoaded);
+    req.addEventListener("error", onFail);
+    req.addEventListener("abort", onFail);
+
+    req.open(
+      "GET",
+      "https://aablain.github.io/classic-survey-results-august-2019/classic-survey-results-august-2019-part-2.json"
+    );
+    req.send();
+
+    function onDataLoaded(event) {
+      if (req.status >= 400) {
+        onFail(event);
+      } else {
+        var json = JSON.parse(this.responseText);
+        res(json);
+      }
+    }
+
+    function onFail(event) {
+      rej(new Error("..."));
+    }
+  });
 }
 
 export function objectEntries(obj) {

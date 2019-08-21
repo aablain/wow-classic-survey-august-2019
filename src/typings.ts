@@ -72,6 +72,14 @@ export namespace Survey {
     | "Colecting items/recipes/wealth"
     | "Barrens Chat";
 
+  export type DailyPlayTimeResp = "1 - 2 hours" | "3 - 4 hours" | "5 - 6 hours" | "7 - 8 hours" | "9 - 10 hours" | "11 - 12 hours" | "12+ hours";
+
+  export type TimeOffWorkResp = "Yes, I have taken a week or more off for Classic's launch" | "I have no other obligations" | "No, I do not plan to take time off";
+
+  export type GuildResp = "Yes" | "No, and I am not currently looking" | "No, though I am currently looking";
+
+  export type PhaseResp = "Phase 1" | "Phase 2" | "Phase 3" | "Phase 4" | "Phase 5" | "Phase 6";
+
   export type AllAnswers =
     | AgeRangeResp
     | CharacterGenderResp
@@ -84,9 +92,9 @@ export namespace Survey {
     | RaceResp
     | RegionResp
     | RoleResp
-    | ServerTypeResp
+    | ServerTypeResp | DailyPlayTimeResp | TimeOffWorkResp | GuildResp | PhaseResp
     | string;
-
+    
   export interface Response {
     ageRange: AgeRangeResp;
     characterGender: CharacterGenderResp;
@@ -103,9 +111,12 @@ export namespace Survey {
     profLeveling: string;
     race: RaceResp;
     region: RegionResp;
-    responseDate: string;
     role: RoleResp;
     serverType: ServerTypeResp;
+    dailyPlayTime: DailyPlayTimeResp,
+    willTakeTimeOffWork: TimeOffWorkResp,
+    hasFoundGuild: GuildResp,
+    phaseMostExcitedFor: PhaseResp
   }
 }
 
@@ -156,15 +167,24 @@ export namespace FilterTypes {
     region: {
       [x: string]: boolean;
     };
-    responseDate: {
-      [x: string]: boolean;
-    };
     role: {
       [x: string]: boolean;
     };
     serverType: {
       [x: string]: boolean;
     };
+    dailyPlayTime: {
+      [x: string]: boolean;
+    },
+    willTakeTimeOffWork: {
+      [x: string]: boolean;
+    },
+    hasFoundGuild: {
+      [x: string]: boolean;
+    },
+    phaseMostExcitedFor: {
+      [x: string]: boolean;
+    }
   }
 
   export interface AnswersCounts {
@@ -213,15 +233,24 @@ export namespace FilterTypes {
     region: {
       [x: string]: number;
     };
-    responseDate: {
-      [x: string]: number;
-    };
     role: {
       [x: string]: number;
     };
     serverType: {
       [x: string]: number;
     };
+    dailyPlayTime: {
+      [x: string]: number;
+    },
+    willTakeTimeOffWork: {
+      [x: string]: number;
+    },
+    hasFoundGuild: {
+      [x: string]: number;
+    },
+    phaseMostExcitedFor: {
+      [x: string]: number;
+    }
   }
 
   export interface QuestionsShowing {
@@ -240,8 +269,11 @@ export namespace FilterTypes {
     profLeveling: boolean;
     race: boolean;
     region: boolean;
-    responseDate: boolean;
     role: boolean;
     serverType: boolean;
+    dailyPlayTime: boolean,
+    willTakeTimeOffWork: boolean,
+    hasFoundGuild: boolean,
+    phaseMostExcitedFor: boolean
   }
 }
