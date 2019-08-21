@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/wow-classic-survey/precache-manifest.dc2d3f271c050d4d6c2d6ddc927cb378.js"
+  "/wow-classic-survey-august-2019/precache-manifest.b3b8d10fb11d975797617b44fa85dee8.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/wow-classic-survey/index.html", {
+workbox.routing.registerNavigationRoute("/wow-classic-survey-august-2019/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
