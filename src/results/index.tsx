@@ -78,7 +78,6 @@ export default (props: Props) => {
           )
         )}
 
-        <div className="result-cont" />
       </div>
     </div>
   );
