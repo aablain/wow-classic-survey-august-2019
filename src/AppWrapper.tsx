@@ -95,7 +95,7 @@ export default class Wrapper extends React.Component<Props, State> {
     this.resetQuestionsShowing = this.resetQuestionsShowing.bind(this);
     this.toggleAnswerFilter = this.toggleAnswerFilter.bind(this);
     this.updateQuestionShowing = this.updateQuestionShowing.bind(this);
-    this.updateFilterLive = this.updateFilterLive.bind(this)
+    this.updateFilterLive = this.updateFilterLive.bind(this);
   }
 
   _calcAnswerQuantities(responses: Survey.Response[]) {
@@ -154,7 +154,8 @@ export default class Wrapper extends React.Component<Props, State> {
     return results.filter(
       item =>
         Data.factions[item.faction][item.class] &&
-        Data.races[item.race][item.class]
+        Data.races[item.race][item.class] &&
+        Data.factionRaces[item.faction][item.race]
     );
   }
 
@@ -407,13 +408,16 @@ export default class Wrapper extends React.Component<Props, State> {
       [answer]: !isSelected
     };
 
-    this.setState({
-      answers: { ...this.state.answers, [type]: updatedSection }
-    }, () => {
-      if (callback) {
-        callback();
+    this.setState(
+      {
+        answers: { ...this.state.answers, [type]: updatedSection }
+      },
+      () => {
+        if (callback) {
+          callback();
+        }
       }
-    });
+    );
   }
 
   updateQuestionShowing(question: string) {

@@ -92,8 +92,10 @@ const titles: { [x: string]: string } = {
   responseDate: "Response Timestamp",
   role: "What will the primary role of your character be",
   serverType: "What type of sever will you be playing on",
-  dailyPlayTime: "After the first month (post-launch), what do you anticipate your average daily playtime will be",
-  willTakeTimeOffWork: "Will you be taking time off work or other obligations for Classic's launch",
+  dailyPlayTime:
+    "After the first month (post-launch), what do you anticipate your average daily playtime will be",
+  willTakeTimeOffWork:
+    "Will you be taking time off work or other obligations for Classic's launch",
   hasFoundGuild: "Have you already found a guild you will join at launch",
   phaseMostExcitedFor: "Which of the six Phases are you most excited to play?"
 };
@@ -194,11 +196,34 @@ export default {
     ],
     region: ["Americas", "Oceanic", "Europe", "Asia"],
     role: ["DPS", "Healer", "Tank"],
-    serverType: ["PvP", "PvE", "RP", /*"RP-PvP"*/],
-    dailyPlayTime: ["1 - 2 hours", "3 - 4 hours", "5 - 6 hours", "7 - 8 hours", "9 - 10 hours", "11 - 12 hours", "12+ hours"],
-    willTakeTimeOffWork: ["Yes, I have taken a week or more off for Classic's launch", "I have no other obligations", "No, I do not plan to take time off"],
-    hasFoundGuild: ["Yes", "No, and I am not currently looking", "No, though I am currently looking"],
-    phaseMostExcitedFor: ["Phase 1", "Phase 2", "Phase 3", "Phase 4", "Phase 5", "Phase 6"]
+    serverType: ["PvP", "PvE", "RP" /*"RP-PvP"*/],
+    dailyPlayTime: [
+      "1 - 2 hours",
+      "3 - 4 hours",
+      "5 - 6 hours",
+      "7 - 8 hours",
+      "9 - 10 hours",
+      "11 - 12 hours",
+      "12+ hours"
+    ],
+    willTakeTimeOffWork: [
+      "Yes, I have taken a week or more off for Classic's launch",
+      "I have no other obligations",
+      "No, I do not plan to take time off"
+    ],
+    hasFoundGuild: [
+      "Yes",
+      "No, and I am not currently looking",
+      "No, though I am currently looking"
+    ],
+    phaseMostExcitedFor: [
+      "Phase 1",
+      "Phase 2",
+      "Phase 3",
+      "Phase 4",
+      "Phase 5",
+      "Phase 6"
+    ]
   },
   colors,
   colorBlindColors,
@@ -228,6 +253,28 @@ export default {
     }
   },
   questions,
+  factionRaces: {
+    ["For the Horde!"]: {
+      Human: false,
+      Dwarf: false,
+      ["Night Elf"]: false,
+      Gnome: false,
+      Orc: true,
+      Undead: true,
+      Tauren: true,
+      Troll: true
+    },
+    ["For the Alliance!"]: {
+      Human: true,
+      Dwarf: true,
+      ["Night Elf"]: true,
+      Gnome: true,
+      Orc: false,
+      Undead: false,
+      Tauren: false,
+      Troll: false
+    }
+  },
   races: {
     Human: {
       Shaman: false,
