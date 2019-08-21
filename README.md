@@ -2,6 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Site should be live!
 
+[https://aablain.github.io/wow-classic-survey-august-2019/](https://aablain.github.io/wow-classic-survey-august-2019/)
+
+Data from First Survey can be found here:
 [https://aablain.github.io/wow-classic-survey/](https://aablain.github.io/wow-classic-survey/)
 
 ## Data Attainment
