@@ -194,7 +194,7 @@ export default {
     ],
     region: ["Americas", "Oceanic", "Europe", "Asia"],
     role: ["DPS", "Healer", "Tank"],
-    serverType: ["PvP", "PvE", "RP", "RP-PvP"],
+    serverType: ["PvP", "PvE", "RP", /*"RP-PvP"*/],
     dailyPlayTime: ["1 - 2 hours", "3 - 4 hours", "5 - 6 hours", "7 - 8 hours", "9 - 10 hours", "11 - 12 hours", "12+ hours"],
     willTakeTimeOffWork: ["Yes, I have taken a week or more off for Classic's launch", "I have no other obligations", "No, I do not plan to take time off"],
     hasFoundGuild: ["Yes", "No, and I am not currently looking", "No, though I am currently looking"],

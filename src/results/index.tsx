@@ -14,6 +14,7 @@ interface Props {
   innerHeight: number;
   isColorBlind: boolean;
   questionsShowing: FilterTypes.QuestionsShowing;
+  updateFilterLive: (category: keyof Survey.Response, filter: string) => void;
 }
 
 export default (props: Props) => {
@@ -36,7 +37,7 @@ export default (props: Props) => {
           Filtering for{" "}
           {props.activeFilters.map(([category, catFilters], catIdx) => {
             return (
-              <>
+              <React.Fragment key={category}>
                 <span
                   style={{
                     color: props.isColorBlind
@@ -44,18 +45,15 @@ export default (props: Props) => {
                       : data.colors[catIdx]
                   }}
                 >
-                  {catIdx + 1}.[
-                  {catFilters.map((filter, idx) =>
-                    !!idx && idx + 1 === catFilters.length
-                      ? ` or ${filter}`
-                      : `${
-                          idx!! && idx + 1 !== catFilters.length ? ", " : " "
-                        }${filter}`
+                  {catFilters.map((filter, idx) => <React.Fragment key={filter}>{" "}<span className="results-subtitle-filter-opt" style={{
+                    backgroundColor: props.isColorBlind
+                      ? data.colorBlindColors[catIdx]
+                      : data.colors[catIdx]
+                  }}>{filter} <span className="results-subtitle-filter-remove-btn" role="button" onClick={() => props.updateFilterLive(category, filter)}>x</span></span></React.Fragment>
                   )}{" "}
-                  ]
                 </span>{" "}
-                {catIdx + 1 !== filtersLength ? ", and " : ""}
-              </>
+                {catIdx + 1 !== filtersLength ? " and " : ""}
+              </React.Fragment>
             );
           })}
         </p>
@@ -76,7 +74,7 @@ export default (props: Props) => {
               totalAnswers={props.computedResponsesLength}
             />
           ) : (
-            <span />
+            <span key={questionKey} />
           )
         )}
 

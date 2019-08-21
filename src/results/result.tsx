@@ -70,7 +70,7 @@ export default class Result extends React.Component<Props, State> {
 
   public render() {
     return (
-      <div className="result-cont">
+      <div className="result-cont" id={this.props.question}>
         <h4 className="result-title">{Data.titles[this.props.question]}?</h4>
         <div className="info-cont">
           {this.getChartType() === "BarChart"
@@ -88,7 +88,7 @@ export default class Result extends React.Component<Props, State> {
                     // textDecoration: !value ? "line-through" : ""
                   }}
                 >
-                  <span className="result-text-title">{title}:</span>{" "}
+                  <span className="result-text-title">{title || "(No Answer)"}:</span>{" "}
                   <span className="result-text-value">
                     {value} -{" "}
                     <span

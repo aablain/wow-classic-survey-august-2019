@@ -95,6 +95,7 @@ export default class Wrapper extends React.Component<Props, State> {
     this.resetQuestionsShowing = this.resetQuestionsShowing.bind(this);
     this.toggleAnswerFilter = this.toggleAnswerFilter.bind(this);
     this.updateQuestionShowing = this.updateQuestionShowing.bind(this);
+    this.updateFilterLive = this.updateFilterLive.bind(this)
   }
 
   _calcAnswerQuantities(responses: Survey.Response[]) {
@@ -257,6 +258,7 @@ export default class Wrapper extends React.Component<Props, State> {
             innerHeight={this.state.innerHeight}
             isColorBlind={this.state.isColorBlind}
             questionsShowing={this.state.questionsShowing}
+            updateFilterLive={this.updateFilterLive}
           />
         )}
       </div>
@@ -397,7 +399,8 @@ export default class Wrapper extends React.Component<Props, State> {
   toggleAnswerFilter(
     answer: string,
     isSelected: boolean,
-    type: keyof Survey.Response
+    type: keyof Survey.Response,
+    callback?: () => void
   ) {
     const updatedSection = {
       ...this.state.answers[type],
@@ -406,6 +409,10 @@ export default class Wrapper extends React.Component<Props, State> {
 
     this.setState({
       answers: { ...this.state.answers, [type]: updatedSection }
+    }, () => {
+      if (callback) {
+        callback();
+      }
     });
   }
 
@@ -418,5 +425,9 @@ export default class Wrapper extends React.Component<Props, State> {
         ]
       }
     });
+  }
+
+  updateFilterLive(category: keyof Survey.Response, filter: string) {
+    this.toggleAnswerFilter(filter, true, category, () => this.applyFilter());
   }
 }

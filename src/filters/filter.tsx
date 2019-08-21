@@ -30,6 +30,7 @@ export default class FilterComp extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
+    this.startScrollTo = this.startScrollTo.bind(this)
     this.startUpdate = this.startUpdate.bind(this);
   }
 
@@ -45,6 +46,8 @@ export default class FilterComp extends React.Component<Props, State> {
             className={`filters-filter-title-text${
               this.props.questionIsShowing ? "" : " is-not-showing"
             }`}
+            role="button"
+            onClick={() => this.startScrollTo(type)}
           >
             {idx}. {title}?{" "}
           </span>
@@ -73,6 +76,16 @@ export default class FilterComp extends React.Component<Props, State> {
           ))}
       </div>
     );
+  }
+
+  startScrollTo(key: keyof Survey.Response) {
+    if (key) {
+      const target = document.querySelector(`#${key}`);
+
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   }
 
   startUpdate() {

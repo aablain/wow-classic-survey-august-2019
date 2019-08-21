@@ -5,8 +5,6 @@ export async function getSurveyData(callback) {
     getSurveyDataPart2()
   ]);
 
-  debugger;
-
   callback(null, [...part1, ...part2]);
 }
 
